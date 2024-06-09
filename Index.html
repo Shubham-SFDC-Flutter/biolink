@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Only Page with Buttons and Tiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+        .avatar-container {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto;
+        }
+        .avatar-name {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .button-container {
+            width: 90%;
+            max-width: 400px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid black; /* Changed border color */
+            border-radius: 10px;
+            background-color: white; /* Changed background color */
+            color: black; /* Changed text color */
+            cursor: pointer;
+            text-align: center; /* Centered button text */
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #f0f0f0; /* Lighten background color on hover */
+        }
+        .tile-container {
+            width: 90%;
+            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tile {
+            width: calc(33.33% - 10px);
+            padding-top: calc(33.33% - 10px); /* Maintain aspect ratio */
+            position: relative;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+        /* Hide the page on non-mobile devices */
+        @media (min-width: 768px) {
+            body {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="avatar-container">
+        <div id="avatar" class="avatar"></div>
+        <div id="avatarName" class="avatar-name"></div>
+    </div>
+    <div class="button-container" id="buttonContainer">
+        <!-- Buttons will be dynamically inserted here -->
+    </div>
+    <div class="tile-container" id="tileContainer">
+        <!-- Tiles will be dynamically inserted here -->
+    </div>
+
+    <script>
+        const avatarImageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU'; // Replace with actual image URL
+        const avatarName = 'Mickey Mouse';
+
+        const buttons = [
+            { name: 'Button 1', link: 'https://example1.com' },
+            { name: 'Button 2', link: 'https://example2.com' },
+            { name: 'Button 3', link: 'https://example3.com' },
+            { name: 'Button 4', link: 'https://example4.com' },
+            { name: 'Button 5', link: 'https://example5.com' },
+            { name: 'Button 6', link: 'https://example6.com' },
+            { name: 'Button 7', link: 'https://example7.com' },
+            { name: 'Button 8', link: 'https://example8.com' },
+            { name: 'Button 9', link: 'https://example9.com' },
+            { name: 'Button 10', link: 'https://example10.com' }
+        ];
+
+        const tiles = [
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtLlqORWBON3KQhytSkAQ9CL2Qmf1fSKR8GAQis49GQalqciL0lW7own-apBWCewZ4K_M&usqp=CAU', link: 'https://google.com' },
+            { imageUrl: 'https://example.com/image9.jpg', link: 'https://link9.com' },
+            { imageUrl: 'https://example.com/image10.jpg', link: 'https://link10.com' },
+            { imageUrl: 'https://example.com/image11.jpg', link: 'https://link11.com' },
+            { imageUrl: 'https://example.com/image12.jpg', link: 'https://link12.com' },
+            { imageUrl: 'https://example.com/image13.jpg', link: 'https://link13.com' },
+            { imageUrl: 'https://example.com/image14.jpg', link: 'https://link14.com' },
+            { imageUrl: 'https://example.com/image15.jpg', link: 'https://link15.com' },
+            { imageUrl: 'https://example.com/image16.jpg', link: 'https://link16.com' },
+            { imageUrl: 'https://example.com/image17.jpg', link: 'https://link17.com' },
+            { imageUrl: 'https://example.com/image18.jpg', link: 'https://link18.com' }
+        ];
+
+        // Set avatar image and name
+        document.getElementById('avatar').style.backgroundImage = `url(${avatarImageUrl})`;
+        document.getElementById('avatarName').textContent = avatarName;
+
+        const buttonContainer = document.getElementById('buttonContainer');
+
+        buttons.forEach(button => {
+            const btn = document.createElement('button');
+            btn.textContent = button.name;
+            btn.onclick = () => {
+                window.location.href = button.link;
+            };
+            buttonContainer.appendChild(btn);
+        });
+
+        const tileContainer = document.getElementById('tileContainer');
+
+        tiles.forEach(tile => {
+            const tileElement = document.createElement('div');
+            tileElement.className = 'tile';
+            tileElement.style.backgroundImage = `url(${tile.imageUrl})`;
+            tileElement.onclick = () => {
+                window.location.href = tile.link;
+            };
+            tileContainer.appendChild(tileElement);
+        });
+    </script>
+</body>
+</html>
